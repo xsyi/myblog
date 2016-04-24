@@ -17,10 +17,16 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 //文章路由
 var articles = require('./routes/articles');
-
+//引入session中间 req.session
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
+var flash = require('connect-flash');
 //得到app
 var app = express();
 
+
+app.set('env',process.env.ENV);
+var config = require('./config');
 // view engine setup
 // 设置模板的存放路径
 app.set('views', path.join(__dirname, 'views'));
@@ -39,6 +45,23 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 // req.cookies res.cookie(key,value)
 app.use(cookieParser());
+app.use(session({
+  secret:'zfpx',
+  resave:true,//每次响应结束后都保存一下session数据
+  saveUninitialized:true,// 保存新创建但未初始化的session
+  store:new MongoStore({
+    url:config.dbUrl
+  })
+}));
+app.use(flash());
+app.use(function(req,res,next){
+  //res.locals 才是真正的渲染模板的对象
+  res.locals.user = req.session.user;
+  res.locals.success = req.flash('success').toString();
+  res.locals.error = req.flash('error').toString()
+  next();
+
+});
 //静态文件服务中间件 指定一个绝对目录 的路径作为静态文件的根目录
 // /a/b.js
 app.use(express.static(path.join(__dirname, 'public')));
