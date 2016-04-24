@@ -15,6 +15,9 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 //用户路由
 var users = require('./routes/users');
+//文章路由
+var articles = require('./routes/articles');
+
 //得到app
 var app = express();
 
@@ -42,6 +45,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //指定路由
 app.use('/', routes);
 app.use('/users', users);
+app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 //捕获404错误并转发到错误处理中间件
