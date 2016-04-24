@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title><%= title %></title>
+    <title>珠峰博客</title>
     <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.css">
 </head>
 <body class="container">
@@ -21,14 +21,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <!--<li><a href="/users/reg">注册</a></li>-->
-                <!--<li><a href="/users/login">登录</a></li>-->
-                <!--<li><a href="/articles/post">发表文章</a></li>-->
-                <!--<li><a href="/users/logout">退出</a></li>-->
                 <%
                 if(user){
                 %>
-                <li><a href="/articles/post">发表文章</a></li>
+                <li><a href="/articles/add">发表文章</a></li>
                 <li><a href="/users/logout">退出</a></li>
                 <%
                 }else{
@@ -38,6 +34,8 @@
                 <%
                 }
                 %>
+
+
             </ul>
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">

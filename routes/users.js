@@ -1,20 +1,23 @@
 var express = require('express');
 var models = require('../models');
 var util = require('../util');
+var auth = require('../middleware/auth');
 //路由的实例
 var router = express.Router();
 //注册
-router.get('/reg', function(req, res, next) {
+router.get('/reg', auth.checkNotLogin, function(req, res, next) {
   res.render('user/reg', { title: '注册' });
 });
 //
-router.post('/reg', function(req, res, next) {
+router.post('/reg', auth.checkNotLogin, function(req, res, next) {
   //保存对象有两种 model.create entity.save
   var user = req.body;
   if(user.password != user.repassword){
     res.redirect('back');
   }else{
     req.body.password = util.md5(req.body.password);
+    //增加一个用户头像
+    req.body.avatar = 'https://secure.gravatar.com/avatar/'+util.md5(req.body.email)+'?s=48';
     models.User.create(req.body,function(err,doc){
       //console.log(doc);
       //res.redirect('/users/login');// 302 Location
@@ -30,11 +33,11 @@ router.post('/reg', function(req, res, next) {
 });
 //只要写后半段就可以了，不同path的全部内容
 //登陆
-router.get('/login', function(req, res, next) {
+router.get('/login',auth.checkNotLogin, function(req, res, next) {
   res.render('user/login', { title: '登陆' });
 });
 
-router.post('/login', function(req, res, next) {
+router.post('/login',auth.checkNotLogin, function(req, res, next) {
   req.body.password = util.md5(req.body.password);
   models.User.findOne({username:req.body.username,password:req.body.password},function(err,doc){
     //if(err){
@@ -64,7 +67,7 @@ router.post('/login', function(req, res, next) {
 });
 
 //退出
-router.get('/logout', function(req, res, next) {
+router.get('/logout',auth.checkLogin, function(req, res, next) {
   req.session.user = null;
   req.flash('success','用户退出成功!');
   res.redirect('/');
