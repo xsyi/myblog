@@ -17,5 +17,6 @@ exports.Article = mongoose.model('article',new mongoose.Schema({
     user:{type:ObjectId,ref:'user'},
     title:String,
     content:String,
+    poster:String,//增加一张图片
     createAt:{type:Date,default:Date.now()}
 }))
