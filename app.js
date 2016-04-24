@@ -58,7 +58,8 @@ app.use(function(req,res,next){
   //res.locals 才是真正的渲染模板的对象
   res.locals.user = req.session.user;
   res.locals.success = req.flash('success').toString();
-  res.locals.error = req.flash('error').toString()
+  res.locals.error = req.flash('error').toString();
+  res.locals.keyword = req.session.keyword;
   next();
 
 });
