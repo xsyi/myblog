@@ -1,0 +1,21 @@
+{
+  "name": "myblog",
+  "description": "",
+  "main": "",
+  "authors": [
+    "yixiaoshan <yixiaoshan@xuetangx.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/xsyi/myblog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
