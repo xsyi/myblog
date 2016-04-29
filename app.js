@@ -36,7 +36,7 @@ app.set('view engine', 'ejs');
 app.engine('html',require('ejs').__express);
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //日志记录中间件
 app.use(logger('dev'));
 //处理content-type=json的请求体 {"name":"zfpx"}
